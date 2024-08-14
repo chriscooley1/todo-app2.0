@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const baseURL = "todo-backend-production-8861.up.railway.app";
+
 const TodoApp = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
 
   // Fetch todos on component mount
   useEffect(() => {
-    axios.get('http://localhost:8000/')
+    axios.get(baseURL)
       .then(response => setTodos(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   // Add a new todo
   const addTodo = () => {
-    axios.post('http://localhost:8000/', { number: todos.length + 1, description: newTodo })
+    axios.post(baseURL, { number: todos.length + 1, description: newTodo })
       .then(response => {
         setTodos([...todos, response.data]);
         setNewTodo("");  // Clear input after submission
